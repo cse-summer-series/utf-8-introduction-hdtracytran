@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 unsigned int num_bytes(char b) {
   //    0xxxxxxx        1xxxxxxx
@@ -51,9 +52,22 @@ unsigned int utf8_strlen(char* unicode) {
  *   bytes_for("成龙", 2) -> 6
  *   bytes_for("成龙", 3) -> -1
  */
+ 
+ // beginning of added code
 unsigned int bytes_for(char* unicode, unsigned int n) {
-  return 0;
+  unsigned int i = 0; // counter
+
+  unsigned int bytes_this_char = 0;
+  unsigned int total_bytes = 0;
+
+  while (i < n) {
+    bytes_this_char = num_bytes(unicode[i]);
+    total_bytes += bytes_this_char;
+    i += bytes_this_char;
+  }
+  return total_bytes;
 }
+// end of added code
 
 int main(int argc, char** argv) {
   if(argc < 2) {
@@ -73,8 +87,16 @@ int main(int argc, char** argv) {
   }
   printf("\n");
 
+
+// beginning of added code
+  char* n_char = argv[2];
+  int n = atoi(n_char);
+  unsigned int total_bytes = bytes_for(name, n);
+  printf("The name %s has %d byte(s) for the first %d characters\n", name, total_bytes, n);
+
   return 0;
 }
+// end of added code
 
 
 
