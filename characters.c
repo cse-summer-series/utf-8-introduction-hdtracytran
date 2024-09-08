@@ -22,14 +22,15 @@ unsigned int num_bytes(char b) {
   else { return -1; }
 }
 
-unsigned int utf8_strlen(char* unicode) {
-  unsigned int len = strlen(unicode); // count of bytes in this string
+unsigned int utf8_strlen(char* unicode) { //José
+  unsigned int len = strlen(unicode); // count of bytes in this string, Jose = 5 bytes
   unsigned int bytes_seen = 0;
   unsigned int unicode_characters_seen = 0;
-  while(bytes_seen < len) {
-    unsigned int bytes_this_char = num_bytes(unicode[bytes_seen]);
-    bytes_seen += bytes_this_char;
-    unicode_characters_seen += 1;
+  while(bytes_seen < len) { // 0 < 5 bytes, 1 < 5 bytes ... 4 < 5
+    unsigned int bytes_this_char = num_bytes(unicode[bytes_seen]); // num_bytes(unicode[0]) = 1 byte = bytes_this_char, unicode[1] = 1 byte ... unicode[3] = 2 bytes
+    bytes_seen += bytes_this_char; // bytes_seen = 1 byte + 1 byte + 1 byte + 2 bytes
+    unicode_characters_seen += 1; // unicode_characters_seen = 1 + 1 + 1 + 1
+    // the difference from this code and mine is that it takes into account the byte size whe
   }
   return unicode_characters_seen;
 }
@@ -56,14 +57,16 @@ unsigned int utf8_strlen(char* unicode) {
  // beginning of added code
 unsigned int bytes_for(char* unicode, unsigned int n) {
   unsigned int i = 0; // counter
-
-  unsigned int bytes_this_char = 0;
   unsigned int total_bytes = 0;
 
-  while (i < n) {
-    bytes_this_char = num_bytes(unicode[i]);
+  unsigned int len = utf8_strlen(unicode); // Ülo --> len = 3 characters
+  if (n > len) {
+    return -1;
+  }
+  while (i < n) { // i = unicode character
+    unsigned int bytes_this_char = num_bytes(unicode[total_bytes]); 
     total_bytes += bytes_this_char;
-    i += bytes_this_char;
+    i += 1; // should be incremented by 1 because we want to go to the next character not byte
   }
   return total_bytes;
 }
