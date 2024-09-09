@@ -59,8 +59,11 @@ unsigned int bytes_for(char* unicode, unsigned int n) {
   unsigned int i = 0; // counter
   unsigned int total_bytes = 0;
 
-  unsigned int len = utf8_strlen(unicode); // Ülo --> len = 3 characters
+  unsigned int len = utf8_strlen(unicode);
   if (n > len) {
+    return -1;
+  }
+  if (n < 0) {
     return -1;
   }
   while (i < n) { // i = unicode character
